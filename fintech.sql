@@ -3,7 +3,7 @@ CREATE DATABASE fintech;
 USE fintech;
 
 CREATE TABLE customer (
-    id                  BINARY(16) PRIMARY KEY,
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
     firstname           VARCHAR(100) DEFAULT NULL,
     lastname            VARCHAR(100) DEFAULT NULL,
     address             TEXT DEFAULT NULL,
@@ -11,9 +11,15 @@ CREATE TABLE customer (
     updated             DATETIME DEFAULT NULL
 );
 
+# Test
+# INSERT INTO  customer (firstname, lastname, address)
+# VALUES ('John', 'Doe', 'New Address');
+#
+# SELECT * FROM customer;
+
 CREATE TABLE user (
-    id 					BINARY(16) PRIMARY KEY,
-    customer_id			BINARY(16) NOT NULL,
+    id 					INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id			INT NOT NULL,
     username			VARCHAR(50) NOT NULL UNIQUE,
     password			VARCHAR(50) NOT NULL,
     email				VARCHAR(100) NOT NULL UNIQUE,
@@ -24,16 +30,16 @@ CREATE TABLE user (
 );
 
 CREATE TABLE account_type (
-    id                  BINARY(16) PRIMARY KEY,
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
     type                VARCHAR(50) NOT NULL,
     created				DATETIME NOT NULL,
     updated				DATETIME DEFAULT NULL
 );
 
 CREATE TABLE account (
-    id                  BINARY(16) PRIMARY KEY,
-    customer_id			BINARY(16) NOT NULL,
-    account_type_id		BINARY(16) NOT NULL,
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id			INT NOT NULL,
+    account_type_id		INT NOT NULL,
     balance             DECIMAL(18, 2),
     pin                 INT DEFAULT NULL,
     account_no          INT NOT NULL,
@@ -105,3 +111,6 @@ FOR EACH ROW
     BEGIN
         SET NEW.updated = NOW();
     END;
+
+# TEST
+# DROP DATABASE fintech;

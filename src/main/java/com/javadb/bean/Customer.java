@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Customer {
-  private UUID id;
+  private int id;
   private String firstname;
   private String lastname;
   private String address;
@@ -12,10 +12,10 @@ public class Customer {
   private Date updated;
 
   public Customer() {
-    this(null, null, null, null, null, null);
+    this(0, null, null, null, null, null);
   }
 
-  public Customer(UUID id, String firstname, String lastname, String address, Date created, Date updated) {
+  public Customer(int id, String firstname, String lastname, String address, Date created, Date updated) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -27,14 +27,14 @@ public class Customer {
   /**
    * @return the id
    */
-  public UUID getId() {
+  public int getId() {
     return id;
   }
 
   /**
    * @param id the id to set
    */
-  public void setId(UUID id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -108,5 +108,10 @@ public class Customer {
     this.updated = updated;
   }
 
+  @Override
+  public String toString() {
+    return String.format("{ %s, %s, %s, %s, %s, %s }", 
+    id, firstname, lastname, address, created != null ? created.toString(): created, updated != null ? updated.toString() : updated);
+  }
   
 }

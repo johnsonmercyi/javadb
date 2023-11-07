@@ -1,10 +1,9 @@
-package com.javadb.repository;
+// package com.javadb.repository;
 
-import java.util.UUID;
+// import java.util.UUID;
 
-import com.javadb.bean.User;
-import com.javadb.db.Database;
+// import com.javadb.bean.User;
 
-public class UserRepository extends Database<User, UUID> {
+// public class UserRepository extends Repository<User, UUID> {
   
-}
+// }
