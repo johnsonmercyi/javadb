@@ -10,7 +10,8 @@ public abstract class Database {
   // Connection Configurations
   private static final String JDBC_URL = "jdbc:mysql://localhost:3306/fintech";
   private static final String USERNAME = "root";
-  private static final String PASSWORD = "123456.soft";
+  // private static final String PASSWORD = "123456.soft";
+  private static final String PASSWORD = "";
 
   // SQL connection object
   private Connection connection;
@@ -98,6 +99,30 @@ public abstract class Database {
     return resultSet;
   }
 
+  //delete Query
+  public boolean deleteQuery(String sql, Object ...params) {
+    boolean  update = false;
+    Connection con = null;
+    try {
+      con = connect();// make a connection first
+      if (con != null) {
+        PreparedStatement pStat = con.prepareStatement(sql);
+        int i = 0;
+        while (params.length > 0 && i < params.length) {
+          pStat.setObject(i + 1, params[i]);
+          i ++;
+        }
+        update = pStat.execute();
+      } else {
+        System.out.println("Connection is null!");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return update;
+  }
+
+  // Close Database Connection Function
   public void closeConnection() {
     try {
       connection.close();

@@ -13,16 +13,16 @@ public class App {
     
 
     // Test: create() method
-    // Customer cst = new Customer();
-    // cst.setFirstname("Izunna");
-    // cst.setLastname("Enyim");
-    // cst.setAddress("New lane avenue");
-    // Optional<Customer> optionalCst = service.create(cst);
-    // if (!optionalCst.isEmpty()) {
-    //   System.out.println("Created: " + optionalCst.get());
-    // } else {
-    //   System.out.println("Empty Object!");
-    // }
+    Customer cst = new Customer();
+    cst.setFirstname("Izunna");
+    cst.setLastname("Enyim");
+    cst.setAddress("New lane avenue");
+    Optional<Customer> optionalCst = service.create(cst);
+    if (!optionalCst.isEmpty()) {
+      System.out.println("Created: " + optionalCst.get());
+    } else {
+      System.out.println("Empty Object!");
+    }
 
     // Test: update() method
     Customer cstUpdate = new Customer();

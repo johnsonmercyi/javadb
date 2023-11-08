@@ -82,7 +82,20 @@ public class CustomerRepository extends Database implements Repository<Customer,
 
   @Override
   public Optional<Customer> remove(Integer id) {
-    return null;
+    boolean result = false;
+    Optional<Customer> cst = findBy(id);
+    if(cst.isPresent()){
+        try {
+            String sql = "DELETE FROM customer WHERE customer.id = ?";
+            result = deleteQuery(sql, id);
+            if(result){
+                return cst;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }   
+    return Optional.empty();
   }
   
 }
