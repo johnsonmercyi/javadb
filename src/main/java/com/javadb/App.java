@@ -14,9 +14,9 @@ public class App {
 
     // Test: create() method
     Customer cst = new Customer();
-    cst.setFirstname("Izunna");
-    cst.setLastname("Enyim");
-    cst.setAddress("New lane avenue");
+    cst.setFirstname("Daizy");
+    cst.setLastname("Amaechi");
+    cst.setAddress("13 works layout");
     Optional<Customer> optionalCst = service.create(cst);
     if (!optionalCst.isEmpty()) {
       System.out.println("Created: " + optionalCst.get());
@@ -25,17 +25,23 @@ public class App {
     }
 
     // Test: update() method
-    Customer cstUpdate = new Customer();
-    cstUpdate.setFirstname("Izunnaya");
-    cstUpdate.setLastname("Enyim");
-    cstUpdate.setAddress("New lane avenue");
-    Optional<Customer> optionalCstUpdate = service.update(4, cstUpdate);
-    if (!optionalCstUpdate.isEmpty()) {
-      System.out.println("Updated: " + optionalCstUpdate.get());
+    // Customer cstUpdate = new Customer();
+    // cstUpdate.setFirstname("Izunnaya");
+    // cstUpdate.setLastname("Enyim");
+    // cstUpdate.setAddress("New lane avenue");
+    // Optional<Customer> optionalCstUpdate = service.update(1, cstUpdate);
+    // if (!optionalCstUpdate.isEmpty()) {
+    //   System.out.println("Updated: " + optionalCstUpdate.get());
+    // } else {
+    //   System.out.println("Empty Object!");
+    // }
+
+    Optional<Customer> optionalCstDelete = service.delete(3);
+    if (!optionalCstDelete.isEmpty()) {
+      System.out.println("Updated: " + optionalCstDelete.get());
     } else {
       System.out.println("Empty Object!");
     }
-
 
     // Test: all() method
     System.out.println(service.getAll());
