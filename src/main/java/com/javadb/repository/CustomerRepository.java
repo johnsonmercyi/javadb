@@ -20,7 +20,8 @@ public class CustomerRepository extends Database implements Repository<Customer,
 
     if (!findBy(customer.getId()).isEmpty()) {
       sql = "UPDATE customer SET firstname=?, lastname=?, address=? WHERE id=?";
-      inserted = postQuery(sql, customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getId());
+      inserted = postQuery(sql, customer.getFirstname(), customer.getLastname(), customer.getAddress(),
+          customer.getId());
     } else {
       sql = "INSERT INTO customer (firstname, lastname, address) VALUES (?, ?, ?)";
       inserted = postQuery(sql, customer.getFirstname(), customer.getLastname(), customer.getAddress());
@@ -47,9 +48,8 @@ public class CustomerRepository extends Database implements Repository<Customer,
             resultSet.getString(2),
             resultSet.getString(3),
             resultSet.getString(4),
-            resultSet.getDate(5), 
-            resultSet.getDate(6)
-        );
+            resultSet.getDate(5),
+            resultSet.getDate(6));
         list.add(cst);
       }
     } catch (SQLException e) {
@@ -71,8 +71,7 @@ public class CustomerRepository extends Database implements Repository<Customer,
             resultSet.getString(3),
             resultSet.getString(4),
             resultSet.getDate(5),
-            resultSet.getDate(6)
-        ));
+            resultSet.getDate(6)));
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -84,18 +83,18 @@ public class CustomerRepository extends Database implements Repository<Customer,
   public Optional<Customer> remove(Integer id) {
     boolean result = false;
     Optional<Customer> cst = findBy(id);
-    if(cst.isPresent()){
-        try {
-            String sql = "DELETE FROM customer WHERE customer.id = ?";
-            result = deleteQuery(sql, id);
-            if(result){
-                return cst;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    if (cst.isPresent()) {
+      try {
+        String sql = "DELETE FROM customer WHERE customer.id = ?";
+        result = deleteQuery(sql, id);
+        if (result) {
+          return cst;
         }
-    }   
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
     return Optional.empty();
   }
-  
+
 }

@@ -2,6 +2,11 @@ CREATE DATABASE fintech;
 
 USE fintech;
 
+# Testing UUID data type and It worked
+# create table demo (idd  UUID);
+# insert into demo values(uuid());
+# select * from demo;
+
 CREATE TABLE customer (
     id                  INT AUTO_INCREMENT PRIMARY KEY,
     firstname           VARCHAR(100) DEFAULT NULL,

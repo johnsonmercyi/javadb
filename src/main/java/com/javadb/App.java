@@ -38,7 +38,7 @@ public class App {
 
     Optional<Customer> optionalCstDelete = service.delete(3);
     if (!optionalCstDelete.isEmpty()) {
-      System.out.println("Updated: " + optionalCstDelete.get());
+      System.out.println("Deleted: " + optionalCstDelete.get());
     } else {
       System.out.println("Empty Object!");
     }
