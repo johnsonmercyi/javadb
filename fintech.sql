@@ -3,10 +3,10 @@ CREATE DATABASE fintech;
 USE fintech;
 
 
-# Testing UUID data type and It worked
-# create table demo (idd  UUID);
-# insert into demo values(uuid());
-# select * from demo;
+-- # Testing UUID data type and It worked
+-- # create table demo (idd  UUID);
+-- # insert into demo values(uuid());
+-- # select * from demo;
 
 
 CREATE TABLE customer (
@@ -22,7 +22,8 @@ CREATE TABLE customer (
 -- INSERT INTO  customer (id, firstname, lastname, address)
 -- VALUES (UUID(), 'John', 'Doe', 'New Address');
 #
-SELECT * FROM customer;
+-- SELECT * FROM customer;
+
 
 
 CREATE TABLE user (
@@ -36,6 +37,7 @@ CREATE TABLE user (
     
     FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE CASCADE
 );
+-- SELECT * FROM user;
 
 CREATE TABLE account_type (
     id              UUID PRIMARY KEY,
@@ -57,7 +59,6 @@ CREATE TABLE account (
     FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE CASCADE,
     FOREIGN KEY (account_type_id) REFERENCES account_type (id) ON UPDATE CASCADE
 );
-
 
 
 # CREATE TRIGGERS

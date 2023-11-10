@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.UUID;
 
 public abstract class Database {
@@ -71,6 +72,8 @@ public abstract class Database {
             pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
           } else if (params[i] instanceof Double) {
             pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          } else {
+            pStat.setObject(i + 1, params[i]);
           }
 
           i++;

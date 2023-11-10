@@ -2,12 +2,13 @@ package com.javadb.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.javadb.bean.User;
 import com.javadb.contracts.ServiceContract;
 import com.javadb.repository.UserRepository;
 
-public class UserService implements ServiceContract<User, Integer> {
+public class UserService implements ServiceContract<User, UUID> {
 
     private UserRepository repo;
 
@@ -16,9 +17,8 @@ public class UserService implements ServiceContract<User, Integer> {
     }
 
     @Override
-    public Optional<User> create(User value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public Optional<User> create(User user) {
+      return repo.add(user);
     }
 
     @Override
@@ -28,19 +28,19 @@ public class UserService implements ServiceContract<User, Integer> {
     }
 
     @Override
-    public Optional<User> findBy(Integer id) {
+    public Optional<User> findBy(UUID id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findBy'");
     }
 
     @Override
-    public Optional<User> update(Integer id, User value) {
+    public Optional<User> update(UUID id, User value) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public Optional<User> delete(Integer id) {
+    public Optional<User> delete(UUID id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }

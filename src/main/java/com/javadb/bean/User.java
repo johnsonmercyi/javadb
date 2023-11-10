@@ -1,9 +1,10 @@
 package com.javadb.bean;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class User {
-  private int id;
+  private UUID id;
   private Customer customer;
   private String username;
   private String password;
@@ -12,10 +13,10 @@ public class User {
   private Date updated;
 
   public User() {
-    this(0, null, null, null, null, null, null);
+    this(UUID.randomUUID(), null, null, null, null, null, null);
   }
 
-  public User(int id, Customer customer, String username, String password, String email, Date created, Date updated) {
+  public User(UUID id, Customer customer, String username, String password, String email, Date created, Date updated) {
     this.id = id;
     this.customer = customer;
     this.username = username;
@@ -28,14 +29,14 @@ public class User {
   /**
    * @return the id
    */
-  public int getId() {
+  public UUID getId() {
     return id;
   }
 
   /**
    * @param id the id to set
    */
-  public void setId(int id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -125,8 +126,8 @@ public class User {
 
   @Override
   public String toString() {
-    return "User [customer=" + customer + ", username=" + username + ", password=" + password + ", email=" + email
-        + ", created=" + created + ", updated=" + updated + "]";
+    return username + ": {customer=" + customer + ", username=" + username + ", password=" + password + ", email=" + email
+        + ", created=" + created + ", updated=" + updated + "}";
   }
 
   
