@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Customer {
-  private int id;
+  private UUID id;
   private String firstname;
   private String lastname;
   private String address;
@@ -12,10 +12,10 @@ public class Customer {
   private Date updated;
 
   public Customer() {
-    this(0, null, null, null, null, null);
+    this(UUID.randomUUID(), null, null, null, null, null);
   }
 
-  public Customer(int id, String firstname, String lastname, String address, Date created, Date updated) {
+  public Customer(UUID id, String firstname, String lastname, String address, Date created, Date updated) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -27,14 +27,14 @@ public class Customer {
   /**
    * @return the id
    */
-  public int getId() {
+  public UUID getId() {
     return id;
   }
 
   /**
    * @param id the id to set
    */
-  public void setId(int id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

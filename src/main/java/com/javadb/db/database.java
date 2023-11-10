@@ -5,13 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public abstract class Database {
   // Connection Configurations
   private static final String JDBC_URL = "jdbc:mysql://localhost:3306/fintech";
   private static final String USERNAME = "root";
-  // private static final String PASSWORD = "123456.soft";
-  private static final String PASSWORD = "";
+  private static final String PASSWORD = "123456.soft";
+  // private static final String PASSWORD = "";
 
   // SQL connection object
   private Connection connection;
@@ -64,8 +65,15 @@ public abstract class Database {
         PreparedStatement pStat = con.prepareStatement(sql);
         int i = 0;
         while (params.length > 0 && i < params.length) {
-          pStat.setObject(i + 1, params[i]);
-          i ++;
+          if (params[i] instanceof String || params[i] instanceof UUID) {
+            pStat.setString(i + 1, params[i].toString());
+          } else if (params[i] instanceof Integer) {
+            pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
+          } else if (params[i] instanceof Double) {
+            pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          }
+
+          i++;
         }
         update = pStat.executeUpdate();
       } else {
@@ -90,6 +98,7 @@ public abstract class Database {
           i++;
         }
         resultSet = pStat.executeQuery();
+
       } else {
         System.out.println("Connection is null!");
       }
@@ -109,7 +118,16 @@ public abstract class Database {
         PreparedStatement pStat = con.prepareStatement(sql);
         int i = 0;
         while (params.length > 0 && i < params.length) {
-          pStat.setObject(i + 1, params[i]);
+          
+          if (params[i] instanceof String || params[i] instanceof UUID) {
+            
+            pStat.setString(i + 1, params[i].toString());
+          } else if (params[i] instanceof Integer) {
+            pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
+          } else if (params[i] instanceof Double) {
+            pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          }
+
           i ++;
         }
         update = pStat.execute();

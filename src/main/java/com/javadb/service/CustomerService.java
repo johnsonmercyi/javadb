@@ -2,12 +2,13 @@ package com.javadb.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.javadb.bean.Customer;
 import com.javadb.contracts.ServiceContract;
 import com.javadb.repository.CustomerRepository;
 
-public class CustomerService implements ServiceContract<Customer, Integer> {
+public class CustomerService implements ServiceContract<Customer, UUID> {
 
   private CustomerRepository repo;
 
@@ -26,12 +27,12 @@ public class CustomerService implements ServiceContract<Customer, Integer> {
   }
 
   @Override
-  public Optional<Customer> findBy(Integer id) {
+  public Optional<Customer> findBy(UUID id) {
     return repo.findBy(id);
   }
 
   @Override
-  public Optional<Customer> update(Integer id, Customer customer) {
+  public Optional<Customer> update(UUID id, Customer customer) {
     Customer oldCustomer = repo.findBy(id).get();
     oldCustomer.setFirstname(customer.getFirstname());
     oldCustomer.setLastname(customer.getLastname());
@@ -40,7 +41,7 @@ public class CustomerService implements ServiceContract<Customer, Integer> {
   }
 
   @Override
-  public Optional<Customer> delete(Integer id) {
+  public Optional<Customer> delete(UUID id) {
     return repo.remove(id);
   }
   
