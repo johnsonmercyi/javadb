@@ -23,26 +23,26 @@ public class UserService implements ServiceContract<User, UUID> {
 
     @Override
     public List<User> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return repo.getAll();
     }
 
     @Override
     public Optional<User> findBy(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findBy'");
+        return repo.findBy(id);
     }
 
     @Override
-    public Optional<User> update(UUID id, User value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public Optional<User> update(UUID id, User user) {
+        User oldUser = repo.findBy(id).get();
+        oldUser.setUsername(user.getUsername());
+        oldUser.setPassword(user.getPassword());
+        oldUser.setEmail(user.getEmail());
+        return repo.add(oldUser);
     }
 
     @Override
     public Optional<User> delete(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        return repo.remove(id);
     }
   
 }
