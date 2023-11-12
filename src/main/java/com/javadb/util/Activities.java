@@ -4,8 +4,8 @@ import com.javadb.bean.Customer;
 
 public class Activities {
   
-  public boolean deposit(Customer customer, double amount, String description) {
-    
+  public static boolean deposit(Customer customer, double amount, String description) {
+    String sql = "INSERT INTO transactions ()";
     return false;
   }
 }

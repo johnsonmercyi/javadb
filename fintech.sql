@@ -62,6 +62,20 @@ CREATE TABLE account (
 
 -- DROP TABLE `account`;
 
+CREATE TABLE transaction (
+    id                UUID PRIMARY KEY,
+    customer_id	      UUID NOT NULL,
+    type              VARCHAR(50) NOT NULL, -- CREDIT, DEBIT
+    type_description  VARCHAR(50) NOT NULL, -- DEPOSIT, WITHDRAWAL, BILLS
+    beneficiary       VARCHAR(50) NOT NULL,
+    amount            DECIMAL(18,2),
+    description       TEXT DEFAULT NULL,
+    created DATETIME NOT NULL,
+    updated DATETIME DEFAULT NULL,
+
+    FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE CASCADE
+);
+
 
 # CREATE TRIGGERS
 CREATE TRIGGER customerCreated
@@ -122,6 +136,22 @@ FOR EACH ROW
     BEGIN
         SET NEW.updated = NOW();
     END;
+
+CREATE TRIGGER transactionCreated 
+BEFORE INSERT ON transaction 
+FOR EACH ROW 
+  BEGIN
+	  SET NEW.created = NOW();
+	END;
+
+
+CREATE TRIGGER transactionUpdated 
+BEFORE UPDATE ON transaction 
+FOR EACH ROW 
+  BEGIN 
+	  SET NEW.updated = NOW();
+	END;
+
 
 # TEST
 -- USE mysql;
