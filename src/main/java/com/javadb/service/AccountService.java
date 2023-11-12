@@ -13,7 +13,7 @@ public class AccountService implements ServiceContract<Account, UUID> {
   private AccountRepository repo;
 
   public AccountService() {
-    // this.repo = new AccountRepository();
+    this.repo = new AccountRepository();
   }
 
   @Override
