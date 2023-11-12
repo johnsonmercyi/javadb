@@ -14,7 +14,7 @@ public class Account {
   private Date updated;
 
   public Account() {
-    this(null, null, null, 0, 0, 0);
+    this(UUID.randomUUID(), null, null, 0, 0, 0);
   }
 
   public Account(UUID id, Customer customer, AccountType accountType, double balance, int pin, int accountNo) {
@@ -138,5 +138,18 @@ public class Account {
     this.updated = updated;
   }
 
+  @Override
+  public String toString() {
+    return "Account {\n"
+        + "\tid: " + id + ",\n"
+        + "\tcustomer: " + customer.getFirstname() + " " + customer.getLastname() + ",\n"
+        + "\taccountType: " + accountType.getType() + ",\n"
+        + "\tbalance: " + balance + ",\n"
+        + "\tpin: " + pin + ",\n"
+        + "\taccountNo: " + accountNo + ",\n"
+        + "\tcreated: " + created + ",\n"
+        + "\tupdated: " + updated + "\n"
+        + "}\n";
+  }
 
 }
