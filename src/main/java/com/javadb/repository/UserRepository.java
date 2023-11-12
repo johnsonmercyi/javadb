@@ -29,11 +29,12 @@ public class UserRepository extends Database implements Repository<User, UUID> {
     if (findBy(user.getId()).isPresent()) {
       sql = "UPDATE user SET username=?, password=?, email=? WHERE id=?";
       inserted = postQuery(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getId());
-      storedUser = user;
+      storedUser = findBy(user.getId()).get();
     } else {
-      // ⚠️ TODO: Assignment
-      if (findByName(user.getUsername()).isPresent() || findByEmail(user.getEmail()).isPresent()) {
-        System.out.println("Username or Email has been taken.");
+      if (findByName(user.getUsername()).isPresent()) {
+        System.out.println("Username has been taken.");
+      } else if (findByEmail(user.getEmail()).isPresent()) {
+        System.out.println("This email already exists. Please try logging in if you're a registered user.");
       } else {
         Optional<Customer> cstOptional = customerRepo.add(user.getCustomer());
         if (cstOptional.isPresent()) {
@@ -84,66 +85,29 @@ public class UserRepository extends Database implements Repository<User, UUID> {
   public Optional<User> findBy(UUID id) {
     try {
       String sql = "SELECT * FROM user WHERE user.id = ?";
-      resultSet = getQuery(sql, id.toString());
-      if (resultSet.next()) {
-        User user = new User();
-
-        user.setId(UUID.fromString(resultSet.getObject(1).toString()));
-        user.setCustomer(customerRepo.findBy(UUID.fromString(resultSet.getString(2))).get());
-        user.setUsername(resultSet.getString(3));
-        user.setPassword(resultSet.getString(4));
-        user.setEmail(resultSet.getString(5));
-        user.setCreated(resultSet.getDate(6));
-        user.setUpdated(resultSet.getDate(7));
-
-        return Optional.ofNullable(user);
-      }
+      return this.fetch(sql, id);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return Optional.empty();
   }
+
   //find by name
   public Optional<User> findByName(String name) {
     try {
       String sql = "SELECT * FROM user WHERE user.username = ?";
-      resultSet = getQuery(sql, name);
-      if (resultSet.next()) {
-        User user = new User();
-
-        user.setId(UUID.fromString(resultSet.getObject(1).toString()));
-        user.setCustomer(customerRepo.findBy(UUID.fromString(resultSet.getString(2))).get());
-        user.setUsername(resultSet.getString(3));
-        user.setPassword(resultSet.getString(4));
-        user.setEmail(resultSet.getString(5));
-        user.setCreated(resultSet.getDate(6));
-        user.setUpdated(resultSet.getDate(7));
-
-        return Optional.ofNullable(user);
-      }
+      return this.fetch(sql, name);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return Optional.empty();
   }
+
   //find by email
   public Optional<User> findByEmail(String email) {
     try {
       String sql = "SELECT * FROM user WHERE user.email = ?";
-      resultSet = getQuery(sql, email);
-      if (resultSet.next()) {
-        User user = new User();
-
-        user.setId(UUID.fromString(resultSet.getObject(1).toString()));
-        user.setCustomer(customerRepo.findBy(UUID.fromString(resultSet.getString(2))).get());
-        user.setUsername(resultSet.getString(3));
-        user.setPassword(resultSet.getString(4));
-        user.setEmail(resultSet.getString(5));
-        user.setCreated(resultSet.getDate(6));
-        user.setUpdated(resultSet.getDate(7));
-
-        return Optional.ofNullable(user);
-      }
+      return this.fetch(sql, email);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -163,6 +127,24 @@ public class UserRepository extends Database implements Repository<User, UUID> {
       } catch (Exception e) {
         e.printStackTrace();
       }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<User> fetch(String sql, Object value) throws SQLException {
+    resultSet = getQuery(sql, value.toString());
+    if (resultSet.next()) {
+      User user = new User();
+
+      user.setId(UUID.fromString(resultSet.getObject(1).toString()));
+      user.setCustomer(customerRepo.findBy(UUID.fromString(resultSet.getString(2))).get());
+      user.setUsername(resultSet.getString(3));
+      user.setPassword(resultSet.getString(4));
+      user.setEmail(resultSet.getString(5));
+      user.setCreated(resultSet.getDate(6));
+      user.setUpdated(resultSet.getDate(7));
+
+      return Optional.ofNullable(user);
     }
     return Optional.empty();
   }

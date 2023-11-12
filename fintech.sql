@@ -124,3 +124,33 @@ FOR EACH ROW
 # TEST
 -- USE mysql;
 -- DROP DATABASE fintech;
+
+-- drop table mysql.innodb_table_stats;
+-- CREATE TABLE
+--     innodb_table_stats (
+--         database_name VARCHAR(64),
+--         table_name VARCHAR(64),
+--         last_update TIMESTAMP,
+--         n_rows BIGINT,
+--         clustered_index_size BIGINT,
+--         sum_of_other_index_sizes BIGINT
+--     );
+
+-- drop table mysql.innodb_index_stats;
+-- CREATE TABLE
+--     innodb_index_stats (
+--         database_name VARCHAR(64) COLLATE utf8_general_ci NOT NULL,
+--         table_name VARCHAR(64) COLLATE utf8_general_ci NOT NULL,
+--         index_name VARCHAR(64) COLLATE utf8_general_ci NOT NULL,
+--         last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--         stat_name VARCHAR(64) COLLATE utf8_general_ci NOT NULL,
+--         stat_value BIGINT UNSIGNED NOT NULL,
+--         sample_size BIGINT UNSIGNED DEFAULT NULL,
+--         stat_description VARCHAR(1024) COLLATE utf8_general_ci NOT NULL,
+--         PRIMARY KEY (
+--             database_name,
+--             table_name,
+--             index_name,
+--             stat_name
+--         )
+--     ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_general_ci;
