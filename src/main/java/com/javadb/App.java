@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.javadb.bean.Account;
+import com.javadb.bean.Customer;
 import com.javadb.bean.User;
 import com.javadb.repository.AccountRepository;
 import com.javadb.repository.AccountTypeRepository;
@@ -20,17 +21,18 @@ public class App {
     UserService service = new UserService(new UserRepository());
 
     // Test create() method
-    // Customer cst = new Customer();
-    // cst.setFirstname("Uzondu");
-    // cst.setLastname("Mmuo");
-    // Optional<User> createdUser = service.create(new User(UUID.randomUUID(),
-    // cst, "uzommuo", "123456", "uzommuo@gmail.com", null, null));
+    Customer cst = new Customer();
+    cst.setFirstname("Uzondu");
+    cst.setLastname("Mmuo");
 
-    // if (createdUser.isPresent()) {
-    // System.out.println("Created: " + createdUser.get());
-    // } else {
-    // System.out.println("Not created!");
-    // }
+    Optional<User> createdUser = service.create(new User(UUID.randomUUID(),
+    cst, "uzommuo", "123456", "uzommuo@gmail.com", null, null));
+
+    if (createdUser.isPresent()) {
+      System.out.println("Created: " + createdUser.get());
+    } else {
+      System.out.println("Not created!");
+    }
 
     // Test read() method
     // System.out.println(service.getAll());
@@ -51,16 +53,16 @@ public class App {
     // }
 
     // Test delete() method
-    Optional<User> checkedUserOptional = service.findBy(UUID.fromString("b7cf3ee0-43a6-4248-bff6-bc53412fc604"));
-    if (checkedUserOptional.isPresent()) {
-      Optional<User> deletedUserOptional = service.delete(checkedUserOptional.get().getId());
-      if (deletedUserOptional.isPresent())
-        System.out.println("User deleted: " + deletedUserOptional.get());
-      else
-        System.out.println("User not deleted!");
-    } else {
-      System.out.println("User not found!");
-    }
+    // Optional<User> checkedUserOptional = service.findBy(UUID.fromString("b7cf3ee0-43a6-4248-bff6-bc53412fc604"));
+    // if (checkedUserOptional.isPresent()) {
+    //   Optional<User> deletedUserOptional = service.delete(checkedUserOptional.get().getId());
+    //   if (deletedUserOptional.isPresent())
+    //     System.out.println("User deleted: " + deletedUserOptional.get());
+    //   else
+    //     System.out.println("User not deleted!");
+    // } else {
+    //   System.out.println("User not found!");
+    // }
   }
 
   static void testAccountType() {
@@ -110,28 +112,62 @@ public class App {
 
   static void testAccount() {
     AccountService service = new AccountService(new AccountRepository());
-    UserService userService = new UserService(new UserRepository());
-    AccountTypeService acctTypeService = new AccountTypeService(new AccountTypeRepository());
+    // UserService userService = new UserService(new UserRepository());
+    // AccountTypeService acctTypeService = new AccountTypeService(new AccountTypeRepository());
     
     //Test create() method
-    User user = userService.findBy(UUID.fromString("a28ce7a2-78e3-4cbc-9d0e-fa71ac78c617")).get();
-    Account acct = new Account();
-    acct.setCustomer(user.getCustomer());
-    acct.setAccountType(acctTypeService.getAll().get(0));
-    acct.setBalance(0);
-    acct.setPin(1234);
+    // User user = userService.findBy(UUID.fromString("a28ce7a2-78e3-4cbc-9d0e-fa71ac78c617")).get();
+    // Account acct = new Account();
+    // acct.setCustomer(user.getCustomer());
+    // acct.setAccountType(acctTypeService.getAll().get(0));
+    // acct.setBalance(0);
+    // acct.setPin(1234);
 
-    Optional<Account> acctOptional =  service.create(acct);
-    if (acctOptional.isPresent()) {
-      System.out.println("Created Account: " + acctOptional.get());
-    } else {
-      System.out.println("Account not created!");
-    }
+    // Optional<Account> acctOptional =  service.create(acct);
+    // if (acctOptional.isPresent()) {
+    //   System.out.println("Created Account: " + acctOptional.get());
+    // } else {
+    //   System.out.println("Account not created!");
+    // }
+
+    // Test getAll() method
+    // System.out.println(service.getAll());
 
     // Test findBy() method
-    // System.out.println(service.findBy(UUID.fromString("79ef4aae-058b-4289-b6a6-64886b761c27")).get());
+    // System.out.println(service.findBy(UUID.fromString("ca813e85-e87f-4137-a874-ec0863b3c9a6")).get());
+
+    // Test upadte() method
+    // Optional<Account> acctOptional = service.findByAccountNo(2495820861L);
+
+    // if (acctOptional.isPresent()) {
+    //   Account acct = acctOptional.get();
+    //   acct.setPin(9876);
+    //   acctOptional = service.update(acct.getId(), acct);
+    //   if (acctOptional.isPresent()) {
+    //     System.out.println("Account updated: " + acctOptional.get());
+    //   } else {
+    //     System.out.println("Account not updated!");
+    //   }
+    // } else {
+    //   System.out.println("Account not found!");
+    // }
+
+    // Test delete() method
+    // Optional<Account> acctOptional = service.findByAccountNo(2495820861L);
+
+    // if (acctOptional.isPresent()) {
+    //   acctOptional = service.delete(acctOptional.get().getId());
+    //   if (acctOptional.isPresent()) {
+    //     System.out.println("Account deleted: " + acctOptional.get());
+    //   } else {
+    //     System.out.println("Account not deleted!");
+    //   }
+    // } else {
+    //   System.out.println("Account not found!");
+    // }
 
   }
+  
   static void testCustomer() {
     // Test Customer Service methods
     CustomerService service = new CustomerService(new CustomerRepository());
@@ -179,8 +215,8 @@ public class App {
   }
 
   public static void main(String[] args) {
-    // testUser();
+    testUser();
     // testAccountType();
-    testAccount();
+    // testAccount();
   }
 }

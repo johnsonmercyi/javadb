@@ -38,7 +38,6 @@ public class AccountRepository extends Database
           accountNo = account.getAccountNo();
           break;
         }
-
         account.setAccountNo(Utility.generateAccountNo());
       }
 
@@ -70,7 +69,7 @@ public class AccountRepository extends Database
         act.setAccountType(accountTypeRepo.findBy(UUID.fromString(resultSet.getObject(3).toString())).get());
         act.setBalance(resultSet.getDouble(4));
         act.setPin(resultSet.getInt(5));
-        act.setAccountNo(resultSet.getInt(6));
+        act.setAccountNo(resultSet.getLong(6));
         act.setCreated(resultSet.getDate(7));
         act.setUpdated(resultSet.getDate(8));
 
@@ -97,7 +96,7 @@ public class AccountRepository extends Database
   public Optional<Account> findByAccountNo(Long accountNo) {
     try {
       String sql = "SELECT * FROM account WHERE account.account_no = ?";
-      this.fetch(sql, accountNo);
+      return this.fetch(sql, accountNo);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -122,12 +121,11 @@ public class AccountRepository extends Database
   }
 
   private Optional<Account> fetch(String sql, Object param) throws SQLException {
-    resultSet = getQuery(sql, param.toString());
+    resultSet = getQuery(sql, param);
 
     if (resultSet.next()) {
-      System.out.println("In result set: ");
       Account act = new Account();
-
+      
       act.setId(UUID.fromString(resultSet.getObject(1).toString()));
       act.setCustomer(customerRepo.findBy(UUID.fromString(resultSet.getObject(2).toString())).get());
       act.setAccountType(accountTypeRepo.findBy(UUID.fromString(resultSet.getObject(3).toString())).get());
@@ -136,7 +134,6 @@ public class AccountRepository extends Database
       act.setAccountNo(resultSet.getLong(6));
       act.setCreated(resultSet.getDate(7));
       act.setUpdated(resultSet.getDate(8));
-
       return Optional.ofNullable(act);
     }
     return Optional.empty();

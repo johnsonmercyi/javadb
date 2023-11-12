@@ -7,32 +7,30 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.javadb.bean.Account;
 import com.javadb.bean.Customer;
 import com.javadb.db.Database;
 
 public class CustomerRepository extends Database implements Repository<Customer, UUID> {
 
   private ResultSet resultSet;
+  
 
   @Override
   public Optional<Customer> add(Customer customer) {
     String sql = "";
     int inserted = -1;
-    Customer storedCustomer = null;
 
     if (!findBy(customer.getId()).isEmpty()) {
       sql = "UPDATE customer SET firstname=?, lastname=?, address=? WHERE id=?";
       inserted = postQuery(sql, customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getId().toString());
-      storedCustomer = findBy(customer.getId()).get();;
     } else {
       sql = "INSERT INTO customer (id, firstname, lastname, address) VALUES (?, ?, ?, ?)";
       inserted = postQuery(sql, customer.getId().toString(), customer.getFirstname(), customer.getLastname(), customer.getAddress());
-
-      storedCustomer = findBy(customer.getId()).get();
     }
 
     if (inserted != -1) {
-      return Optional.ofNullable(storedCustomer);
+      return Optional.ofNullable(findBy(customer.getId()).get());
     }
 
     return Optional.empty();

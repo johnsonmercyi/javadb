@@ -151,7 +151,7 @@ public class Account {
         + "\taccountNo: " + accountNo + ",\n"
         + "\tcreated: " + created + ",\n"
         + "\tupdated: " + updated + "\n"
-        + "}\n";
+        + "}";
   }
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.javadb.bean.Account;
 import com.javadb.bean.Customer;
 import com.javadb.bean.User;
 import com.javadb.db.Database;
@@ -14,41 +15,59 @@ import com.javadb.db.Database;
 public class UserRepository extends Database implements Repository<User, UUID> {
 
   private CustomerRepository customerRepo;
+  private AccountTypeRepository acctTypeRepo;
+  private AccountRepository accountRepo;
   private ResultSet resultSet;
 
   public UserRepository() {
     customerRepo = new CustomerRepository();
+    acctTypeRepo = new AccountTypeRepository();
+    accountRepo = new AccountRepository();
   }
 
   @Override
   public Optional<User> add(User user) {
     String sql = "";
     int inserted = -1;
-    User storedUser = null;
 
     if (findBy(user.getId()).isPresent()) {
       sql = "UPDATE user SET username=?, password=?, email=? WHERE id=?";
       inserted = postQuery(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getId());
-      storedUser = findBy(user.getId()).get();
     } else {
       if (findByName(user.getUsername()).isPresent()) {
         System.out.println("Username has been taken.");
       } else if (findByEmail(user.getEmail()).isPresent()) {
         System.out.println("This email already exists. Please try logging in if you're a registered user.");
       } else {
+
+        // Register the Customer
         Optional<Customer> cstOptional = customerRepo.add(user.getCustomer());
-        if (cstOptional.isPresent()) {
-          sql = "INSERT INTO user (id, customer_id, username, password, email) VALUES (?, ?, ?, ?, ?)";
-          inserted = postQuery(sql, user.getId(), user.getCustomer().getId(), user.getUsername(), user.getPassword(), user.getEmail());
-    
-          storedUser = findBy(user.getId()).get();
+
+        if (cstOptional != null && cstOptional.isPresent()) {
+
+          /**
+           * Create account
+           */
+          Account acct = new Account();
+          acct.setCustomer(cstOptional.get());
+          acct.setAccountType(acctTypeRepo.getAll().get(0));
+          acct.setBalance(0);
+          acct.setPin(1234);
+
+          // Register user Bank Account
+          Optional<Account> accountOptional = accountRepo.add(acct);
+  
+          if (accountOptional != null && accountOptional.isPresent()) {
+            // Make the customer a User
+            sql = "INSERT INTO user (id, customer_id, username, password, email) VALUES (?, ?, ?, ?, ?)";
+            inserted = postQuery(sql, user.getId(), user.getCustomer().getId(), user.getUsername(), user.getPassword(), user.getEmail());            
+          }
         }
       }
-      
     }
 
     if (inserted != -1) {
-      return Optional.ofNullable(storedUser);
+      return Optional.ofNullable(findBy(user.getId()).get());
     }
     
     return Optional.empty();

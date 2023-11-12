@@ -72,6 +72,8 @@ public abstract class Database {
             pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
           } else if (params[i] instanceof Double) {
             pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          } else if (params[i] instanceof Long) {
+            pStat.setLong(i + 1, Long.parseLong(params[i].toString()));
           } else {
             pStat.setObject(i + 1, params[i]);
           }
@@ -97,7 +99,18 @@ public abstract class Database {
         PreparedStatement pStat = con.prepareStatement(sql);
         int i = 0;
         while (params.length > 0 && i < params.length) {
-          pStat.setObject(i + 1, params[i]);
+          if (params[i] instanceof String || params[i] instanceof UUID) {
+            pStat.setString(i + 1, params[i].toString());
+          } else if (params[i] instanceof Integer) {
+            pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
+          } else if (params[i] instanceof Double) {
+            pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          } else if (params[i] instanceof Long) {
+            pStat.setLong(i + 1, Long.parseLong(params[i].toString()));
+          } else {
+            pStat.setObject(i + 1, params[i]);
+          }
+
           i++;
         }
         resultSet = pStat.executeQuery();
@@ -123,12 +136,15 @@ public abstract class Database {
         while (params.length > 0 && i < params.length) {
           
           if (params[i] instanceof String || params[i] instanceof UUID) {
-            
             pStat.setString(i + 1, params[i].toString());
           } else if (params[i] instanceof Integer) {
             pStat.setInt(i + 1, Integer.parseInt(params[i].toString()));
           } else if (params[i] instanceof Double) {
             pStat.setDouble(i + 1, Double.parseDouble(params[i].toString()));
+          } else if (params[i] instanceof Long) {
+            pStat.setLong(i + 1, Long.parseLong(params[i].toString()));
+          } else {
+            pStat.setObject(i + 1, params[i]);
           }
 
           i ++;
