@@ -64,7 +64,7 @@ CREATE TABLE account (
 
 CREATE TABLE transaction (
     id                UUID PRIMARY KEY,
-    customer_id	      UUID NOT NULL,
+    account_id	      UUID NOT NULL,
     type              VARCHAR(50) NOT NULL, -- CREDIT, DEBIT
     type_description  VARCHAR(50) NOT NULL, -- DEPOSIT, WITHDRAWAL, BILLS
     beneficiary       VARCHAR(50) NOT NULL,
@@ -73,8 +73,10 @@ CREATE TABLE transaction (
     created DATETIME NOT NULL,
     updated DATETIME DEFAULT NULL,
 
-    FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE CASCADE
+    FOREIGN KEY (account_id) REFERENCES account (id) ON UPDATE CASCADE
 );
+
+-- DROP TABLE transaction;
 
 
 # CREATE TRIGGERS

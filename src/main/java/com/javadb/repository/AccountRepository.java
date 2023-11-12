@@ -78,7 +78,6 @@ public class AccountRepository extends Database
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    closeConnection();
     return list;
   }
 

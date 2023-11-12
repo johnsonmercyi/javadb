@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.javadb.bean.Account;
 import com.javadb.bean.Customer;
+import com.javadb.bean.Transaction;
 import com.javadb.bean.User;
 import com.javadb.repository.AccountRepository;
 import com.javadb.repository.AccountTypeRepository;
@@ -13,7 +14,9 @@ import com.javadb.repository.UserRepository;
 import com.javadb.service.AccountService;
 import com.javadb.service.AccountTypeService;
 import com.javadb.service.CustomerService;
+import com.javadb.service.TransactionService;
 import com.javadb.service.UserService;
+import com.javadb.util.Activities;
 
 public class App {
 
@@ -111,7 +114,7 @@ public class App {
   }
 
   static void testAccount() {
-    AccountService service = new AccountService(new AccountRepository());
+    AccountService service = new AccountService();
     // UserService userService = new UserService(new UserRepository());
     // AccountTypeService acctTypeService = new AccountTypeService(new AccountTypeRepository());
     
@@ -214,9 +217,35 @@ public class App {
     // System.out.println(service.findBy(UUID.fromString("e8854cc7-2c5e-41e3-8041-7979f52ea837")).get());
   }
 
+  static void testActivities() {
+    Activities activity = new Activities();
+    AccountService accountService = new AccountService();
+    TransactionService transService = new TransactionService();
+
+    // Test: deposit() method
+    Account account = accountService.findByAccountNo(2260974011L).get();
+    Transaction trans = new Transaction();
+    trans.setAccount(account);
+    trans.setType(Transaction.Type.CREDIT.name());
+    trans.setTypeDescription(Transaction.TypeDescription.DEPOSIT.name());
+    trans.setBeneficiary("self");
+    trans.setAmount(50000);
+    trans.setDescription("Monthly saving");
+
+    boolean isDeposited = activity.deposit(trans);
+
+    if (isDeposited) {
+      System.out.println("Transaction made: " + transService.findBy(trans.getId()).get());
+    } else {
+      System.out.println("Trasaction failed!");
+    }
+  }
+  
   public static void main(String[] args) {
-    testUser();
+    // testUser();
     // testAccountType();
     // testAccount();
+
+    testActivities();
   }
 }

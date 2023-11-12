@@ -12,8 +12,8 @@ public class AccountService implements ServiceContract<Account, UUID> {
 
   private AccountRepository repo;
 
-  public AccountService(AccountRepository repo) {
-    this.repo = repo;
+  public AccountService() {
+    // this.repo = new AccountRepository();
   }
 
   @Override
