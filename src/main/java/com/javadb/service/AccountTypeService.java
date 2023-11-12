@@ -31,6 +31,10 @@ public class AccountTypeService implements ServiceContract<AccountType, UUID> {
     return repo.findBy(id);
   }
 
+  public Optional<AccountType> findByType(String type) {
+    return repo.findByType(type);
+  } 
+
   @Override
   public Optional<AccountType> update(UUID id, AccountType accountType) {
     Optional<AccountType> oldAccountTypeOptional = repo.findBy(id);

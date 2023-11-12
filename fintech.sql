@@ -52,13 +52,15 @@ CREATE TABLE account (
     account_type_id	UUID NOT NULL,
     balance         DECIMAL(18, 2),
     pin             INT DEFAULT NULL,
-    account_no      INT NOT NULL,
+    account_no      BIGINT NOT NULL,
     created				  DATETIME NOT NULL,
     updated				  DATETIME DEFAULT NULL,
 
     FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE CASCADE,
     FOREIGN KEY (account_type_id) REFERENCES account_type (id) ON UPDATE CASCADE
 );
+
+-- DROP TABLE `account`;
 
 
 # CREATE TRIGGERS

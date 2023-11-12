@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.javadb.bean.AccountType;
-import com.javadb.bean.User;
 import com.javadb.db.Database;
 
 public class AccountTypeRepository extends Database implements Repository<AccountType, UUID> {

@@ -3,10 +3,14 @@ package com.javadb;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.javadb.bean.Customer;
+import com.javadb.bean.Account;
 import com.javadb.bean.User;
+import com.javadb.repository.AccountRepository;
+import com.javadb.repository.AccountTypeRepository;
 import com.javadb.repository.CustomerRepository;
 import com.javadb.repository.UserRepository;
+import com.javadb.service.AccountService;
+import com.javadb.service.AccountTypeService;
 import com.javadb.service.CustomerService;
 import com.javadb.service.UserService;
 
@@ -19,30 +23,31 @@ public class App {
     // Customer cst = new Customer();
     // cst.setFirstname("Uzondu");
     // cst.setLastname("Mmuo");
-    // Optional<User> createdUser = service.create(new User(UUID.randomUUID(), 
-    //     cst, "uzommuo", "123456", "uzommuo@gmail.com", null, null));
+    // Optional<User> createdUser = service.create(new User(UUID.randomUUID(),
+    // cst, "uzommuo", "123456", "uzommuo@gmail.com", null, null));
 
     // if (createdUser.isPresent()) {
-    //   System.out.println("Created: " + createdUser.get());
+    // System.out.println("Created: " + createdUser.get());
     // } else {
-    //   System.out.println("Not created!");
+    // System.out.println("Not created!");
     // }
 
     // Test read() method
     // System.out.println(service.getAll());
 
     // Test update() method
-    // Optional<User> userOptional = service.findBy(UUID.fromString("a28ce7a2-78e3-4cbc-9d0e-fa71ac78c617"));
+    // Optional<User> userOptional =
+    // service.findBy(UUID.fromString("a28ce7a2-78e3-4cbc-9d0e-fa71ac78c617"));
     // if (userOptional.isPresent()) {
-    //   User user = userOptional.get();
-    //   user.setUsername("uzomadu");
-    //   Optional<User> updatedUserOptional = service.update(user.getId(), user);
-    //   if(updatedUserOptional.isPresent())
-    //     System.out.println("User updated: " + updatedUserOptional.get());
-    //   else
-    //     System.out.println("User not updated!");
+    // User user = userOptional.get();
+    // user.setUsername("uzomadu");
+    // Optional<User> updatedUserOptional = service.update(user.getId(), user);
+    // if(updatedUserOptional.isPresent())
+    // System.out.println("User updated: " + updatedUserOptional.get());
+    // else
+    // System.out.println("User not updated!");
     // } else {
-    //   System.out.println("User not found!");
+    // System.out.println("User not found!");
     // }
 
     // Test delete() method
@@ -58,6 +63,75 @@ public class App {
     }
   }
 
+  static void testAccountType() {
+    AccountTypeService service = new AccountTypeService(new AccountTypeRepository());
+
+    // Test create() method
+    // AccountType accountType = new AccountType();
+    // accountType.setType("DemoType");
+    // Optional<AccountType> accountTypeOptional = service.create(accountType);
+    // if (accountTypeOptional.isPresent()) {
+    // System.out.println("Account type created: " + accountTypeOptional.get());
+    // } else {
+    // System.out.println("Account type not created!");
+    // }
+
+    // Test read() method
+    // System.out.println(service.getAll());
+
+    // Test update() method
+    // Optional<AccountType> accountTypeOptional = service.findByType("Express");
+    // if (accountTypeOptional.isPresent()) {
+    // AccountType type = accountTypeOptional.get();
+    // type.setType("Savings");
+    // accountTypeOptional = service.update(type.getId(), type);
+    // if (accountTypeOptional.isPresent()) {
+    // System.out.println("Updated " + accountTypeOptional.get());
+    // } else {
+    // System.out.println("Account type not updated.");
+    // }
+    // } else {
+    // System.out.println("Account type not found!");
+    // }
+
+    // Test delete() method
+    // Optional<AccountType> accountTypeOptional = service.findByType("DemoType");
+    // if (accountTypeOptional.isPresent()) {
+    //   accountTypeOptional = service.delete(accountTypeOptional.get().getId());
+    //   if (accountTypeOptional.isPresent()) {
+    //     System.out.println("Deleted " + accountTypeOptional.get());
+    //   } else {
+    //     System.out.println("Account type not deleted.");
+    //   }
+    // } else {
+    //   System.out.println("Account type not found!");
+    // }
+  }
+
+  static void testAccount() {
+    AccountService service = new AccountService(new AccountRepository());
+    UserService userService = new UserService(new UserRepository());
+    AccountTypeService acctTypeService = new AccountTypeService(new AccountTypeRepository());
+    
+    //Test create() method
+    User user = userService.findBy(UUID.fromString("a28ce7a2-78e3-4cbc-9d0e-fa71ac78c617")).get();
+    Account acct = new Account();
+    acct.setCustomer(user.getCustomer());
+    acct.setAccountType(acctTypeService.getAll().get(0));
+    acct.setBalance(0);
+    acct.setPin(1234);
+
+    Optional<Account> acctOptional =  service.create(acct);
+    if (acctOptional.isPresent()) {
+      System.out.println("Created Account: " + acctOptional.get());
+    } else {
+      System.out.println("Account not created!");
+    }
+
+    // Test findBy() method
+    // System.out.println(service.findBy(UUID.fromString("79ef4aae-058b-4289-b6a6-64886b761c27")).get());
+
+  }
   static void testCustomer() {
     // Test Customer Service methods
     CustomerService service = new CustomerService(new CustomerRepository());
@@ -103,7 +177,10 @@ public class App {
     // Test: get() method
     // System.out.println(service.findBy(UUID.fromString("e8854cc7-2c5e-41e3-8041-7979f52ea837")).get());
   }
+
   public static void main(String[] args) {
-    testUser();
+    // testUser();
+    // testAccountType();
+    testAccount();
   }
 }

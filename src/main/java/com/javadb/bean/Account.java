@@ -3,27 +3,29 @@ package com.javadb.bean;
 import java.sql.Date;
 import java.util.UUID;
 
+import com.javadb.util.Utility;
+
 public class Account {
   private UUID id;
   private Customer customer;
   private AccountType accountType;
   private double balance;
   private int pin;
-  private int accountNo;
+  private long accountNo;
   private Date created;
   private Date updated;
 
   public Account() {
-    this(UUID.randomUUID(), null, null, 0, 0, 0);
+    this(UUID.randomUUID(), null, null, 0, 0);
   }
 
-  public Account(UUID id, Customer customer, AccountType accountType, double balance, int pin, int accountNo) {
+  public Account(UUID id, Customer customer, AccountType accountType, double balance, int pin) {
     this.id = id;
     this.customer = customer;
     this.accountType = accountType;
     this.balance = balance;
     this.pin = pin;
-    this.accountNo = accountNo;
+    this.accountNo = Utility.generateAccountNo();
   }
 
   /**
@@ -99,14 +101,14 @@ public class Account {
   /**
    * @return the accountNo
    */
-  public int getAccountNo() {
+  public long getAccountNo() {
     return accountNo;
   }
 
   /**
    * @param accountNo the accountNo to set
    */
-  public void setAccountNo(int accountNo) {
+  public void setAccountNo(long accountNo) {
     this.accountNo = accountNo;
   }
 

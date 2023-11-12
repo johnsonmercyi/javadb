@@ -31,7 +31,7 @@ public class AccountService implements ServiceContract<Account, UUID> {
     return repo.findBy(id);
   }
 
-  public Optional<Account> findByAccountNo(Integer accountNo) {
+  public Optional<Account> findByAccountNo(Long accountNo) {
     return repo.findByAccountNo(accountNo);
   } 
 
