@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.javadb.bean.AccountType;
+import com.javadb.bean.User;
 import com.javadb.db.Database;
 
 public class AccountTypeRepository extends Database implements Repository<AccountType, UUID> {
@@ -25,10 +26,14 @@ public class AccountTypeRepository extends Database implements Repository<Accoun
       inserted = postQuery(sql, accountType.getType());
       storedAccount = findBy(accountType.getId()).get();
     } else {
-      sql = "INSERT INTO account_type (id, typ) VALUES (?, ?)";
-      inserted = postQuery(sql, accountType.getId(), accountType.getType());
+      if (findByType(accountType.getType()).isPresent()) {
+        System.out.println("Account Type already exists");
+      } else {
+        sql = "INSERT INTO account_type (id, type) VALUES (?, ?)";
+        inserted = postQuery(sql, accountType.getId(), accountType.getType());
 
-      storedAccount = findBy(accountType.getId()).get();
+        storedAccount = findBy(accountType.getId()).get();
+      }
     }
 
     if (inserted != -1) {
@@ -86,6 +91,17 @@ public class AccountTypeRepository extends Database implements Repository<Accoun
       } catch (Exception e) {
         e.printStackTrace();
       }
+    }
+    return Optional.empty();
+  }
+
+  // find by Type
+  public Optional<AccountType> findByType(String type) {
+    try {
+      String sql = "SELECT * FROM account_type WHERE account_type.type = ?";
+      return this.fetch(sql, type);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return Optional.empty();
   }

@@ -10,7 +10,7 @@ public class AccountType {
   private Date updated;
 
   public AccountType() {
-    this(null, null, null, null);
+    this(UUID.randomUUID(), null, null, null);
   }
 
   public AccountType(UUID id, String type, Date created, Date updated) {
@@ -76,5 +76,11 @@ public class AccountType {
     this.updated = updated;
   }
 
+  @Override
+  public String toString() {
+    return "AccountType [id=" + id + ", type=" + type + ", created=" + created + ", updated=" + updated + "]";
+  }
+
+  
   
 }
