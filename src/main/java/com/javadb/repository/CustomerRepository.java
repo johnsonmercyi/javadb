@@ -23,7 +23,7 @@ public class CustomerRepository extends Database implements Repository<Customer,
     if (!findBy(customer.getId()).isEmpty()) {
       sql = "UPDATE customer SET firstname=?, lastname=?, address=? WHERE id=?";
       inserted = postQuery(sql, customer.getFirstname(), customer.getLastname(), customer.getAddress(), customer.getId().toString());
-      storedCustomer = customer;
+      storedCustomer = findBy(customer.getId()).get();;
     } else {
       sql = "INSERT INTO customer (id, firstname, lastname, address) VALUES (?, ?, ?, ?)";
       inserted = postQuery(sql, customer.getId().toString(), customer.getFirstname(), customer.getLastname(), customer.getAddress());
