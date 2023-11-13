@@ -30,6 +30,8 @@ public class Activities {
 
       if (acctOptional.isPresent()) {
         return true;
+      } else {
+        // ⚠️ We should delete the created transaction if the update is not successful.
       }
     }
     return false;
