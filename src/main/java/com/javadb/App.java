@@ -225,20 +225,38 @@ public class App {
     // Test: deposit() method
     Account account = accountService.findByAccountNo(2260974011L).get();
     Transaction trans = new Transaction();
+    // trans.setAccount(account);
+    // trans.setType(Transaction.Type.CREDIT.name());
+    // trans.setTypeDescription(Transaction.TypeDescription.DEPOSIT.name());
+    // trans.setBeneficiary("self");
+    // trans.setAmount(50000);
+    // trans.setDescription("Monthly saving");
+
+    // boolean isDeposited = activity.deposit(trans);
+
+    // if (isDeposited) {
+    //   System.out.println("Transaction made: " + transService.findBy(trans.getId()).get());
+    // } else {
+    //   System.out.println("Trasaction failed!");
+    // }
+
+    //Test: withdrawal() method
+    
     trans.setAccount(account);
-    trans.setType(Transaction.Type.CREDIT.name());
-    trans.setTypeDescription(Transaction.TypeDescription.DEPOSIT.name());
-    trans.setBeneficiary("self");
-    trans.setAmount(50000);
-    trans.setDescription("Monthly saving");
+    trans.setType(Transaction.Type.DEBIT.name());
+    trans.setTypeDescription(Transaction.TypeDescription.WITHDRAWAL.name());
+    trans.setBeneficiary("Udochi");
+    trans.setAmount(25000);
+    trans.setDescription("contribution to project");
 
-    boolean isDeposited = activity.deposit(trans);
+    boolean isWithdrawn = activity.withdrawal(trans);
 
-    if (isDeposited) {
-      System.out.println("Transaction made: " + transService.findBy(trans.getId()).get());
-    } else {
-      System.out.println("Trasaction failed!");
+    if (isWithdrawn){
+      System.out.println("Transaction details: " + transService.findBy(trans.getId()));
+    }else{
+      System.out.println("Transaction failed");
     }
+
   }
   
   public static void main(String[] args) {
