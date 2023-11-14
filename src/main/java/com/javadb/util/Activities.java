@@ -54,7 +54,7 @@ public class Activities {
     }
     return false;
   }
-
+  
   public boolean changePin() {
     return false;
   }
