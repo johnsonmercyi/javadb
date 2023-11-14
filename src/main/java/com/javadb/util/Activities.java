@@ -57,11 +57,28 @@ public class Activities {
     return false;
   }
   
-  public boolean changePin() {
+  public boolean changePin(Account account, int oldPin, int newPin) {
+    // Validate pin
+    int newPinLen = Integer.toString(newPin).length();
+    if (newPinLen < 4 || newPinLen > 4) {
+      System.out.println("New pin must be 4 digits.");
+    } else {
+      if (account.getPin() == oldPin) {
+        account.setPin(newPin);// update account pin
+        Optional<Account> acctOptional = accountService.update(account.getId(), account);
+        if (acctOptional != null && acctOptional.isPresent()) {
+          return true;
+        }
+      } else {
+        System.out.println("Incorrect pin!");
+      }
+    }
+
     return false;
   }
 
   public boolean bills(Transaction transaction) {
+    
     return false;
   }
 

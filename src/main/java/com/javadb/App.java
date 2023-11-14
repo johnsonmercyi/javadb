@@ -242,20 +242,23 @@ public class App {
 
     //Test: withdrawal() method
     
-    trans.setAccount(account);
-    trans.setType(Transaction.Type.DEBIT.name());
-    trans.setTypeDescription(Transaction.TypeDescription.WITHDRAWAL.name());
-    trans.setBeneficiary("Udochi");
-    trans.setAmount(25000);
-    trans.setDescription("contribution to project");
+    // trans.setAccount(account);
+    // trans.setType(Transaction.Type.DEBIT.name());
+    // trans.setTypeDescription(Transaction.TypeDescription.WITHDRAWAL.name());
+    // trans.setBeneficiary("Udochi");
+    // trans.setAmount(25000);
+    // trans.setDescription("contribution to project");
 
-    boolean isWithdrawn = activity.withdrawal(trans);
+    // boolean isWithdrawn = activity.withdrawal(trans);
 
-    if (isWithdrawn){
-      System.out.println("Transaction details: " + transService.findBy(trans.getId()));
-    }else{
-      System.out.println("Transaction failed");
-    }
+    // if (isWithdrawn){
+    //   System.out.println("Transaction details: " + transService.findBy(trans.getId()));
+    // }else{
+    //   System.out.println("Transaction failed");
+    // }
+
+    // Test: changePin() method
+    // boolean isChanged = activity.changePin(account, 1234, 4321);
 
   }
   
