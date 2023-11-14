@@ -260,6 +260,23 @@ public class App {
     // Test: changePin() method
     // boolean isChanged = activity.changePin(account, 1234, 4321);
 
+    //Test: Bills() method
+    
+    trans.setAccount(account);
+    trans.setType(Transaction.Type.DEBIT.name());
+    trans.setTypeDescription(Transaction.TypeDescription.BILLS.name());
+    trans.setBeneficiary("EEDC");
+    trans.setAmount(2000);
+    trans.setDescription("power bill for november");
+
+    boolean isbill = activity.withdrawal(trans);
+
+    if (isbill){
+      System.out.println("Transaction details: " + transService.findBy(trans.getId()));
+    }else{
+      System.out.println("Transaction failed");
+    }
+
   }
   
   public static void main(String[] args) {

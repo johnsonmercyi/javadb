@@ -77,8 +77,24 @@ public class Activities {
     return false;
   }
 
-  public boolean bills(Transaction transaction) {
+  public boolean bills(Transaction transaction int pin) {
+    //pin validation
+    if(transaction.getAccount().getPin())
+    //check if the account bal is greater or =to the amount to be withdrawn
+    if(transaction.getAccount().getBalance() >= transaction.getAmount()){
+        //set new account balance
+        double newBal = transaction.getAccount().getBalance() - transaction.getAmount();
+        transaction.getAccount().setBalance(newBal);
 
+        //update account 
+        Optional<Account> acctOptional = accountService.update(transaction.getAccount().getId(), transaction.getAccount());
+        if (acctOptional != null && acctOptional.isPresent()) {
+          Optional<Transaction> transOptional = transService.create(transaction);
+          if (transOptional != null && transOptional.isPresent()){
+            return true;
+          }
+        } 
+    }
     return false;
   }
 
