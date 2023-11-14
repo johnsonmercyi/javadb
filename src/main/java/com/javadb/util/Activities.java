@@ -37,10 +37,10 @@ public class Activities {
 
   //Withdrawal
   public boolean withdrawal(Transaction transaction) {
-    Optional<Transaction> transOptional = transService.create(transaction);
-    if (transOptional != null && transOptional.isPresent()){
-      //check if the account bal is greater or =to the amount to be withdrawn
-      if(transaction.getAccount().getBalance() >= transaction.getAmount()){
+    //check if the account bal is greater or =to the amount to be withdrawn
+    if(transaction.getAccount().getBalance() >= transaction.getAmount()){
+      Optional<Transaction> transOptional = transService.create(transaction);
+      if (transOptional != null && transOptional.isPresent()){
         //set new account balance
         double newBal = transaction.getAccount().getBalance() - transaction.getAmount();
         transaction.getAccount().setBalance(newBal);
@@ -50,7 +50,7 @@ public class Activities {
         if (acctOptional != null && acctOptional.isPresent()) {
           return true;
         }
-      }
+      } 
     }
     return false;
   }
